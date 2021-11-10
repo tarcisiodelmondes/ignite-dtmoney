@@ -11,7 +11,7 @@ export const GlobalStyle = createGlobalStyle`
 
     --text-title: #363F5F;
     --text-body: #969CB2;
-    --shape: #FFFFFF
+    --shape: #FFFFFF;
    }
    
    *,*::before, *::after  {
@@ -39,6 +39,7 @@ export const GlobalStyle = createGlobalStyle`
 
     button {
         cursor: pointer;
+        border: none;
     }
 
     body, button, textarea, input{
@@ -53,5 +54,46 @@ export const GlobalStyle = createGlobalStyle`
     [disabled] {
         opacity: 0.6;
         cursor: not-allowed;
+    }
+
+    .react-modal-overlay {
+        background-color: rgba(0,0,0,.5);
+
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .react-modal-content {
+        background-color: var(--background);
+        border-radius: 0,24rem;
+
+        width: 100%;
+        max-width: 576px;
+        height: 100%;
+        max-height: 588px;
+
+        padding: 3rem ;
+        position: relative;
+    }
+
+    .react-modal-close {
+        position: absolute;
+        top: 1.3rem;
+        right: 1.3rem;
+
+        background-color: transparent;
+        cursor: pointer;
+        transition: filter .3s;
+
+        &:hover {
+            filter: brightness(.8);
+        }
     }
 `;
