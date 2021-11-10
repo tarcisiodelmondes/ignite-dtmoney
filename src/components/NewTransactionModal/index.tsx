@@ -1,13 +1,12 @@
 import Modal from "react-modal";
 
 import { RadioBox, Container, TransactionTypeContainer } from "./styles";
+import { FormEvent, useState } from "react";
 
 import closeImg from "../../assets/close.svg";
-
 import incomeImg from "../../assets/income.svg";
 import outcomeImg from "../../assets/outcome.svg";
-import { FormEvent, useState } from "react";
-import { api } from "../../services/api";
+import { useTransactions } from "../../hooks/useTransactions";
 
 interface NewTransactionModalProps {
   isOpen: boolean;
@@ -20,15 +19,27 @@ export function NewTransactionModal({
 }: NewTransactionModalProps) {
   const [type, setType] = useState<"deposit" | "withdraw">("deposit");
   const [title, setTitle] = useState("");
-  const [value, setValue] = useState("");
+  const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
+
+  const { createTransaction } = useTransactions();
 
   async function handleCreateNewTransaction(e: FormEvent) {
     e.preventDefault();
 
-    const data = { type, title, value: Number(value), category };
+    await createTransaction({
+      type,
+      title,
+      amount: Number(amount.replace("-", "")),
+      category,
+    });
 
-    await api.post("/transactions", data);
+    onRequestClose();
+
+    setTitle("");
+    setAmount("");
+    setCategory("");
+    setType("deposit");
   }
 
   return (
@@ -54,12 +65,14 @@ export function NewTransactionModal({
           placeholder="Titulo"
           onChange={(e) => setTitle(e.target.value)}
           value={title}
+          required
         />
         <input
           type="number"
           placeholder="Valor"
-          onChange={(e) => setValue(e.target.value)}
-          value={value}
+          onChange={(e) => setAmount(e.target.value)}
+          value={amount}
+          required
         />
 
         <TransactionTypeContainer>
@@ -89,6 +102,7 @@ export function NewTransactionModal({
           placeholder="Categoria"
           onChange={(e) => setCategory(e.target.value)}
           value={category}
+          required
         />
 
         <button type="submit">Cadastrar</button>
