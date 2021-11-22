@@ -25,7 +25,7 @@
 
 ## Demonstração da aplicação
 
-Acesse: <https://dtmoney.tarcisiodelmondes.dev/>
+Acesse: <https://ignite-dtmoney-two.vercel.app>
 
 ## Pré-requisitos
 
